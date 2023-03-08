@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string></string>
+	<key>connections</key>
+	<dict>
+		<key>9B957655-F0B0-4A7C-AB42-40D5F740ECB7</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>DF59B3D0-125E-449C-A805-4375562ACC4D</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string></string>
+	<key>description</key>
+	<string></string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>屏幕分辨率调整</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>/opt/homebrew/bin/displayplacer "$1"</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>5</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>DF59B3D0-125E-449C-A805-4375562ACC4D</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<true/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>escaping</key>
+				<integer>68</integer>
+				<key>keyword</key>
+				<string>res</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>正在搜索...</string>
+				<key>script</key>
+				<string>#!/bin/bash
+
+# Start JSON array
+echo '{"items":['
+
+# Loop through displayplacer list
+displayplacer list | grep -E '^\s+[0-9]+:' | while read -r line; do
+    id=$(echo "$line" | awk '{print $1}')
+    mode=$(echo "$line" | awk '{print $2}')
+    width=$(echo "$mode" | cut -d'x' -f1)
+    height=$(echo "$mode" | cut -d'x' -f2)
+    
+    # Output JSON object for each resolution
+    echo '{
+        "uid": "'"$id"'",
+        "type": "default",
+        "title": "'"$width"' x '"$height"'",
+        "subtitle": "Set resolution to '"$width"' x '"$height"'",
+        "arg": "'"$id"'",
+        "autocomplete": "'"$id"'",
+        "icon": {
+            "type": "fileicon",
+            "path": "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/KEXT.icns"
+        }
+    },'
+done
+
+# End JSON array and remove last comma
+echo ']}' | sed '$s/,$//'
+</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string>/Users/panjianbo/Projects/alfred/res_search.py</string>
+				<key>subtext</key>
+				<string></string>
+				<key>title</key>
+				<string>屏幕分辨率设置</string>
+				<key>type</key>
+				<integer>8</integer>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>9B957655-F0B0-4A7C-AB42-40D5F740ECB7</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string></string>
+	<key>uidata</key>
+	<dict>
+		<key>9B957655-F0B0-4A7C-AB42-40D5F740ECB7</key>
+		<dict>
+			<key>xpos</key>
+			<real>160</real>
+			<key>ypos</key>
+			<real>160</real>
+		</dict>
+		<key>DF59B3D0-125E-449C-A805-4375562ACC4D</key>
+		<dict>
+			<key>xpos</key>
+			<real>365</real>
+			<key>ypos</key>
+			<real>160</real>
+		</dict>
+	</dict>
+	<key>userconfigurationconfig</key>
+	<array/>
+	<key>webaddress</key>
+	<string></string>
+</dict>
+</plist>
